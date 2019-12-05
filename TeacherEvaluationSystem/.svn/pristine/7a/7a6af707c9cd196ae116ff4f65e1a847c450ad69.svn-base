@@ -1,0 +1,19 @@
+package ssm.dao;
+
+import java.util.List;
+
+import ssm.entity.Teacher;
+
+public interface TeacherDao {
+	//根据教师ID查询该教师是否存在
+	int FindTeacher(int teacher_id);
+	
+	//根据教师ID查询Teacher表的基本信息
+	Teacher FindTeacherMSG(int teacher_id);
+	
+	//根据教师ID，再通过实体类修改教师密码
+	int changepass(Teacher teacher);
+	
+	//用list集合实现多表查询，获取教师所有信息
+	List<Teacher> getteacherallmsg();
+}

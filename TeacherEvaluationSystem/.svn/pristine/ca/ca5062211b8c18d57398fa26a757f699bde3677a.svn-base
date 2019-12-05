@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ssm.dao.TeacherDao">
+    <select id="FindTeacher" parameterType="int" resultType="int">
+    select count(1) from teacher WHERE teacher_id = #{teacher_id}
+    </select>
+    <select id="FindTeacherMSG" parameterType="int" resultType="ssm.entity.Teacher">
+    select * from teacher WHERE teacher_id = #{teacher_id}
+    </select>
+    <update id="changepass" parameterType="ssm.entity.Teacher">
+    update teacher set password = #{password} where teacher_id=#{teacher_id}
+    </update>
+</mapper>

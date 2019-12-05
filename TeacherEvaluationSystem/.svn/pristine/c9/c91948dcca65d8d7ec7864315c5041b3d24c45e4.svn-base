@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ssm.dao.AdminDao">
+	 <!-- class表新增数据（新增班级） -->
+     <insert id="addClass" parameterType="ssm.entity.Classroom">
+     	insert into class(class_id,class_name)
+     	values(#{class_id},#{class_name}) 
+     </insert>
+     <!-- class表删除数据 （删除班级）-->
+      <delete id="delClassByid" parameterType="int">
+     	delete from class where class_id=#{id}
+     </delete> 
+     <!-- class表查询数据（查询班级） -->
+     <select id="getClassroom" resultType="ssm.entity.Classroom">
+     	select * from class
+     </select>
+     
+     <!-- subject表新增数据（新增课程）-->
+     <insert id="addSubject" parameterType="ssm.entity.Subject">
+     	insert into subject(subject_id,subject_name)
+     	values(#{subject_id},#{subject_name})
+     </insert>
+     <!-- subject表删除数据 （删除课程）-->
+     <delete id="delSubjectByid" parameterType="int">
+     	delete from subject where subject_id=#{id}
+     </delete> 
+     <!-- subject表修改数据（修改课程名） -->
+     <update id="updateSubject" parameterType="ssm.entity.Subject">
+     	update subject
+     	set subject_name=#{subject_name}
+     	where subject_id=#{subject_id}
+     </update>
+     <!-- subject表查询数据（查询课程) -->
+     <select id="getSubject" resultType="ssm.entity.Subject">
+     	select * from subject
+     </select>
+     
+     <!-- ins表新增数据（新增学院） -->
+     <insert id="addIns" parameterType="ssm.entity.Ins">
+     	insert into ins(ins_id,ins_name)
+     	values(#{ins_id},#{ins_name})
+     </insert>
+     <!-- ins表删除数据 （删除学院）-->
+     <delete id="delInsByid" parameterType="int">
+     	delete from ins where ins_id=#{id}
+     </delete> 
+      <!-- int表修改数据（修改学院名） -->
+     <update id="updateIns" parameterType="ssm.entity.Ins">
+     	update ins
+     	set ins_name=#{ins_name}
+     	where ins_id=#{ins_id}
+     </update>
+     <!-- ins表查询数据（查询学院） -->
+     <select id="getIns" resultType="ssm.entity.Ins">
+     	select * from ins
+     </select>
+     
+     <!-- questioninfo表新增数据 （新增问题）-->
+     <insert id="addQuestion" parameterType="ssm.entity.Question">
+     	insert into questioninfo(question,answer_A,answer_B,answer_C,answer_D)
+     	values(#{question},#{answer_A},#{answer_B},#{answer_C},#{answer_D})
+     </insert>
+     <!-- questioninfo表删除数据（删除问题） -->
+     <delete id="delQuestionByid" parameterType="int">
+     	delete from questioninfo where question_id=#{question_id}
+     </delete>
+     <!-- questioninfo表修改数据（修改问题） -->
+     <update id="updateQuestion" parameterType="ssm.entity.Question">
+     	update questioninfo
+     	set question=#{question},answer_A=#{answer_A},answer_B=#{answer_B},answer_C=#{answer_C},answer_D=#{answer_D}
+     	where question_id=#{question_id}
+     </update>
+     <!-- questioninfo表查询数据（查询问题） -->
+     <select id="getQUestin" resultType="ssm.entity.Question">
+     	select * from questioninfo
+     </select>
+     
+     <!-- studentinfo表新增数据（插入学生信息） -->
+     <insert id="addStudent" parameterType="ssm.entity.Student">
+     	insert into studentinfo(student_id,student_name,student_ins,student_classid,password,role_id)
+     	values(#{student_id},#{student_name},#{student_ins},#{student_classid},#{password},#{role_id})
+     </insert>
+     <!-- studentinfo表删除数据（删除学生） -->
+     <delete id="delStudentByid" parameterType="int">
+     	delete from studentinfo where student_id=#{student_id}
+     </delete>
+     <!-- studentinfo表修改数据（重置密码） -->
+     <update id="updateStuPassByid" parameterType="ssm.entity.Student">
+     	update studentinfo
+     	set password=#{password}
+     	where student_id=#{student_id}
+     </update>
+     <!-- studentinfo表查看数据（查看学生） -->
+     <select id="getStudents" resultType="ssm.entity.Student">
+		select * from studentinfo
+     </select>
+     
+     <!-- roles表增加数据 （添加角色） -->
+     <insert id="addRole" parameterType="ssm.entity.Roles">
+			insert into roles(role_id,role_name,describes)
+			values(#{role_id},#{role_name},#{describes})
+     </insert>
+     <!-- roles表删除数据 （删除角色）-->
+     <delete id="delRole" parameterType="int">
+     		delete from roles where role_id=#{role_id}
+     </delete>
+     <!-- roles表修改数据 （修改角色） -->
+     <update id="updateRole" parameterType="ssm.entity.Roles">
+     		update roles
+     		set role_name=#{role_name},describes=#{describes}
+     		where role_id=#{role_id}
+     </update>
+     <!-- roles表查询数据 （查询角色）-->
+     <select id="getRoles" resultType="ssm.entity.Roles">
+     		select * from roles
+     </select>
+</mapper>

@@ -1,0 +1,85 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>柱状图</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/scripts/css/style.css" media="screen" type="text/css" />
+</head>
+<body>
+	<h1>柱状图</h1>
+	<div class="skillbar clearfix " data-percent="50%"> <!-- 进度条的显示位置 按百分比算 和分数对应-->
+		<div class="skillbar-title" style="background: #d35400;">
+			<span>张红师</span>
+		</div>
+		<div class="skillbar-bar" style="background: #e67e22;"></div>
+		<div class="skill-bar-percent">50</div> <!-- 评价分数显示 成绩 -->
+	</div>
+	<!-- End Skill Bar -->
+
+	<div class="skillbar clearfix " data-percent="30%">
+		<div class="skillbar-title" style="background: #2980b9;">
+			<span>宋玉</span>
+		</div>
+		<div class="skillbar-bar" style="background: #3498db;"></div>
+		<div class="skill-bar-percent">30</div>
+	</div>
+	<!-- End Skill Bar -->
+
+	<div class="skillbar clearfix " data-percent="50%">
+		<div class="skillbar-title" style="background: #2c3e50;">
+			<span>林黛玉</span>
+		</div>
+		<div class="skillbar-bar" style="background: #2c3e50;"></div>
+		<div class="skill-bar-percent">50</div>
+	</div>
+	<!-- End Skill Bar -->
+
+	<div class="skillbar clearfix " data-percent="40%">
+		<div class="skillbar-title" style="background: #46465e;">
+			<span>立新村</span>
+		</div>
+		<div class="skillbar-bar" style="background: #5a68a5;"></div>
+		<div class="skill-bar-percent">40</div>
+	</div>
+	<!-- End Skill Bar -->
+
+	<div class="skillbar clearfix " data-percent="75%">
+		<div class="skillbar-title" style="background: #333333;">
+			<span>王宝强</span>
+		</div>
+		<div class="skillbar-bar" style="background: #525252;"></div>
+		<div class="skill-bar-percent">75</div>
+	</div>
+	<!-- End Skill Bar -->
+
+	<div class="skillbar clearfix " data-percent="100%">
+		<div class="skillbar-title" style="background: #27ae60;">
+			<span>李小璐</span>
+		</div>
+		<div class="skillbar-bar" style="background: #2ecc71;"></div>
+		<div class="skill-bar-percent">100</div>
+	</div>
+	<!-- End Skill Bar -->
+
+	<div class="skillbar clearfix " data-percent="70%">
+		<div class="skillbar-title" style="background: #124e8c;">
+			<span>火明刚</span>
+		</div>
+		<div class="skillbar-bar" style="background: #4288d0;"></div>
+		<div class="skill-bar-percent">70</div>
+	</div>
+	<!-- End Skill Bar -->
+
+	<div style="text-align: center; clear: both;"></div>
+	<script src='${pageContext.request.contextPath}/scripts/js/jquery.js'></script>
+	<script src="${pageContext.request.contextPath}/scripts/js/echart.js"></script>
+
+	<script type="text/javascript">
+		setTimeout(function() {
+			window.location.reload();//刷新当前页面 10s刷新一次.
+		}, 10000)
+	</script>
+</body>
+</html>

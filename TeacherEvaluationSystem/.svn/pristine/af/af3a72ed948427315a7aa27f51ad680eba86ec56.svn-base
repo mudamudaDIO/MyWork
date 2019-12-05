@@ -1,0 +1,85 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" import="ssm.entity.*,java.util.*"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" />
+<title></title>
+
+</head>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/scripts/css/index.css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/scripts/js/index.js"></script>
+<body>
+<%
+	User u=(User)session.getAttribute("user");
+	int role=u.getRole();
+	List<RolePermission> pers=(List<RolePermission>)session.getAttribute("permission");
+%>
+	<div class="t_top">
+		<div class="t_top_wctxt">
+			<div class="t_top_txt">
+				<p>欢迎:<%=u.getName() %></p>
+				<p class="p1">时间：
+				<div id="mydate">XXXX-XX-XX 00:00:00 XXX</div>
+				</p>
+			</div>
+		</div>
+		<script type="text/javascript">
+				function date(){
+					function p(s) {
+		       			 return s < 10 ? '0' + s: s;
+		    		}
+					var mydate = new Date();
+					var d = mydate.getDay();
+					var weekly=["星期天","星期一","星期二","星期三","星期四","星期五","星期六"]
+					var yyyy = mydate.getFullYear();
+					var mm = mydate.getMonth()+1;
+					var da = mydate.getDate();
+					var h = mydate.getHours();
+					var m = mydate.getMinutes();
+					var s = mydate.getSeconds();
+					document.getElementById("mydate").innerHTML=p(yyyy)+"-"+p(mm)+"-"+p(da)+" "+p(h)+':'+p(m)+":"+p(s)+" "+weekly[d];
+				}
+				setInterval('date()','1000');
+				date();
+			</script>
+		<div class="t_top_title">
+			<p>教师综合评价系统</p>
+		</div>
+	</div>
+	<div class="t_main">
+		<div class="t_left">
+			<div class="t_left_ul">
+				<ul>
+				<% 
+					
+					for(RolePermission per:pers){
+						 Permission p=per.getPer();
+						 if(p.getPermission_grade()==1){//判断是否是1级菜单
+							 int num=p.getPermission_id();//设置该1级菜单的编号，子菜单通过该编号找到父级菜单
+				%>
+					<li class="li1">
+						
+						<span><%=p.getPermission_name() %></span>
+						<div class="t_left_ul_2">
+							<ul>
+							<%
+								for(RolePermission per2:pers){
+									if(per2.getPer().getPermission_grade()==2 && per2.getPer().getParetn_num()==num){
+							%>
+									<li><%=per2.getPer().getPermission_name()%></li>
+							<%}}%>
+							</ul>
+						</div>
+					</li>	
+				<%}}%>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+</html>

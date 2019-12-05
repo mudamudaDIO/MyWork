@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ssm.dao.StudentDao">
+		<resultMap type="ssm.entity.Student" id="student">
+			<id column="student_id" property="student_id"/>
+			<result column="student_name" property="student_name"/>
+			<result column="student_ins" property="student_ins"/>
+			<result column="student_classid" property="student_classid"/>
+			<result column="password" property="password"/>
+			<result column="role_id" property="role_id"/>
+			<association property="classroom" javaType="ssm.entity.Classroom">
+				<id column="class_id" property="class_id"/>
+				<result column="class_name" property="class_name"/>
+			</association>
+			<association property="ins" javaType="ssm.entity.Ins">
+				<id column="ins_id" property="ins_id"/>
+				<result column="ins_name" property="ins_name"/>
+			</association>
+		</resultMap>
+
+      <select id="getStudent" parameterType="ssm.entity.Student" resultMap="student">
+      		select * from studentinfo where 
+      		student_id=#{student_id} and password=#{password}
+      </select>
+      
+      <update id="changePass" parameterType="ssm.entity.Student">
+      		update  studentinfo
+      		set password=#{password}
+      		where student_id=#{student_id} 
+      </update>
+      
+      <select id="getStudentByid" parameterType="int" resultMap="student">
+      		 select * from studentinfo,ins,class
+			 WHERE student_id=#{student_id} and student_classid=class_id and student_ins=ins_id
+      </select>
+      
+      <select id="getSubjects">
+      		select * from subclass ,subject 
+      		where sub_id=subject_id and class_id=#{id}
+      </select>
+      
+      <insert id="addAnswer" parameterType="ssm.entity.Answer">
+      		insert into answer(vote_id,bevote_id,answer_1,answer_2,answer_3,answer_4,answer_5,answer_6,answer_7
+      		,answer_8,answer_9,answer_10,score)
+      		values(#{vote_id},#{bevote_id},#{answer_1},#{answer_2},#{answer_3},#{answer_4},#{answer_5},#{answer_6}
+      		,#{answer_7},#{answer_8},#{answer_9},#{answer_10},#{score})
+      </insert>
+</mapper>

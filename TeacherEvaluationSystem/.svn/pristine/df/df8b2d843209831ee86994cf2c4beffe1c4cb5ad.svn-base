@@ -1,0 +1,36 @@
+package ssm.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import ssm.dao.StudentDao;
+import ssm.entity.Student;
+
+@Service
+public class StudentService {
+	@Autowired
+	private StudentDao studentdao;
+	
+	/**
+	 * µÇÂ¼
+	 * @param student
+	 * @return boolean
+	 */
+	public boolean login(Student student) {
+		Student stu= studentdao.getStudent(student);
+		if(stu!=null) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	/**
+	 * ĞŞ¸ÄÃÜÂë
+	 * @param student
+	 * @return int
+	 */
+	public int changePass(Student student) {
+		return studentdao.changePass(student);
+	}
+}

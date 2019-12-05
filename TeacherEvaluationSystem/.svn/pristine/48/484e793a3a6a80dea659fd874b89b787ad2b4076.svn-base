@@ -1,0 +1,91 @@
+package ssm.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import ssm.entity.ResultMsg;
+import ssm.entity.Student;
+import ssm.entity.Subject;
+import ssm.entity.Teacher;
+import ssm.entity.User;
+import ssm.service.StudentService;
+import ssm.service.TeacherService;
+
+//学生控制器
+@Controller
+@RequestMapping("/student")
+public class StudentController {
+	@Autowired
+	private StudentService studentService;
+	@Autowired
+	private TeacherService teacherService;
+	/***********页面跳转开始***********************/
+	//个人中心页面
+	@RequestMapping("/allteachermsg")
+	public ModelAndView center(HttpSession session) {
+		User u=(User)session.getAttribute("user");
+		int id=u.getUserId();
+		System.out.println(id);
+		Student s=studentService.getStudentByid(id);
+		ModelAndView mv=new ModelAndView("student/center");
+		mv.addObject("studentmsg", s);		
+		return mv;
+	}
+	//修改密码页面
+	@RequestMapping("/changepass")
+	public ModelAndView changepass() {
+		ModelAndView mv=new ModelAndView("student/changepass");
+		return mv;
+	}
+	//评价教师（教师列表页面）
+	@RequestMapping("/teacherList")
+	public ModelAndView teacherList(HttpSession session) {
+		User u=(User)session.getAttribute("user");//获取session里的User对象，拿到当前用户的Id
+		Student stu=studentService.getStudentByid(u.getUserId());//根据ID获取学生的详细信息
+		int classid=stu.getStudent_classid();//获得班级ID
+		int insid=stu.getStudent_ins();//获得学院ID
+		List<Subject> sub=studentService.getSubjects(classid);//根据班级ID获取课程
+		List<Teacher> list=new ArrayList<>();//定义一个存放Teacher对象的列表
+		for(Subject s:sub) {//遍历获取的课程
+			Teacher t=new Teacher();
+			t.setTeacher_insid(insid);
+			t.setTeacher_subid(s.getSubject_id());
+			Teacher teacher=teacherService.getTeacherBysubclass(t);//根据课程和学院获取教师
+			list.add(teacher);
+		}
+		ModelAndView mv=new ModelAndView("student/teacherList");
+		mv.addObject("teachers", list);
+		return mv;
+	}
+	/***********页面跳转结束***********************/
+	//修改密码
+	@RequestMapping("/changePassSubmit")
+	@ResponseBody
+	public ResultMsg changePass(String oldpassword,String newpass,int id) {
+		Student stu=studentService.getStudentByid(id);
+		ResultMsg rs=null;
+		if(stu.getPassword().equals(oldpassword)) {
+			Student student=new Student();
+			student.setPassword(newpass);
+			student.setStudent_id(id);
+			int i=studentService.changePass(student);//调用修改密码方法
+			if(i>0) {
+				rs=new ResultMsg(1, "修改成功");
+			}else {
+				rs=new ResultMsg(0, "修改失败");
+			}		
+		}else {
+			rs=new ResultMsg(3, "原密码不相符，修改失败");
+		}	
+		
+		return rs;
+	}
+}

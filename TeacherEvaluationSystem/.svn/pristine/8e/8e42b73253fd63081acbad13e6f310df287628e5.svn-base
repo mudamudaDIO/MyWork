@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 教师表的查询 -->
+
+<mapper namespace="ssm.dao.TeacherDao">
+    <select id="FindTeacher" parameterType="int" resultType="int">
+    select count(1) from teacher WHERE teacher_id = #{teacher_id}
+    </select>
+    <select id="FindTeacherMSG" parameterType="int" resultType="ssm.entity.Teacher">
+    select * from teacher WHERE teacher_id = #{teacher_id}
+    </select>
+    <update id="changepass" parameterType="ssm.entity.Teacher">
+    update teacher set password = #{password} where teacher_id=#{teacher_id}
+    </update>
+    
+    <!-- 自定义教师和院系、学科的映射 -->
+    <resultMap type="ssm.entity.Teacher" id="teacher">
+    <id property="teacher_id" column="teacher_id"/>
+    <result property="teacher_name" column="teacher_name"/>
+    <result property="insid" column="insid"/>
+    <result property="teacher_subid" column="teacher_subid"/>
+    <result property="password" column="password"/>
+    
+    <association property="ins" javaType="ssm.entity.Ins">
+    <id property="ins_id" column="ins_id"/>
+    <result property="ins_name" column="ins_name"/>
+    </association>
+    <association property="subject" javaType="ssm.entity.Subject">
+    <id property="subject_id" column="subject_id"/>
+    <result property="subject_name" column="subject_name"/>
+    </association>
+    </resultMap>
+    <!-- 根据映射ID实现一对多的关联查询 -->
+    <select id="getteacherallmsg" parameterType="int" resultMap="teacher">
+    select * from teacher,ins,subject where ins.ins_id = 
+    teacher.teacher_insid and subject.subject_id = teacher.
+    teacher_subid and teacher_id = #{teacher_id}
+    </select>
+    
+    <!-- 教师对同行进行评价，将评价分数存入数据库 -->
+    <insert id="addVoteScore" parameterType="ssm.entity.Answer">
+    insert into answer(vote_id,bevote_id,answer_1,answer_2,answer_3
+    ,answer_4,answer_5,answer_6,answer_7,answer_8,answer_9,answer_10
+    ,score,type,beizu)
+     values(#{vote_id},#{bevote_id},#{answer_1},#{answer_2},#{answer_3}
+     ,#{answer_4},#{answer_5},#{answer_6},#{answer_7},#{answer_8},#{answer_9}
+     ,#{answer_10},#{score},#{type},#{beizu}) 
+    </insert>
+    
+    <!-- 获取所有对自己的评价 -->
+    <resultMap type="ssm.entity.Answer" id="answer">
+    <id property="id" column="id"/>
+    <result property="vote_id" column="vote_id"/>
+    <result property="bevote_id" column="bevote_id"/>
+    <result property="answer_1" column="answer_1"/>
+    <result property="answer_2" column="answer_2"/>
+    <result property="answer_3" column="answer_3"/>
+    <result property="answer_4" column="answer_4"/>
+    <result property="answer_5" column="answer_5"/>
+    <result property="answer_6" column="answer_6"/>
+    <result property="answer_7" column="answer_7"/>
+    <result property="answer_8" column="answer_8"/>
+    <result property="answer_9" column="answer_9"/>
+    <result property="answer_10" column="answer_10"/>
+    <result property="score" column="score"/>
+    <result property="type" column="type"/>
+    <result property="beizu" column="beizu"/>
+    
+    
+    <association property="teacher" javaType="ssm.entity.Teacher">
+    <id property="teacher_id" column="teacher_id"/>
+    <id property="teacher_name" column="teacher_name"/>
+    <id property="teacher_insid" column="teacher_insid"/>
+    <id property="teacher_subid" column="teacher_subid"/>
+    <id property="role_id" column="role_id"/>
+    </association>
+    
+    
+    <association property="student" javaType="ssm.entity.Student">
+    <id property="student_id" column="student_id"/>
+    <id property="student_name" column="student_name"/>
+    <id property="student_ins" column="student_ins"/>
+    <id property="role_id" column="role_id"/>
+    </association>
+    </resultMap>
+    <!-- 一对多查询,获取所有评教信息 -->
+    <select id="getscore" parameterType="int" resultMap="answer">
+    SELECT * from answer a
+	join teacher t on a.vote_id = t.teacher_id
+	where bevote_id = #{bevote_id}
+	union
+	SELECT * from answer a
+	join studentinfo s on a.vote_id = s.student_id
+	where bevote_id = #{bevote_id}
+    </select>
+    <!-- 获取评价者的评教信息详情 -->
+    <select id="getadventure" parameterType="int" resultType="ssm.entity.Answer">
+    select * from answer where vote_id=#{vote_id} and bevote_id=#{bevote_id}
+    </select>
+    <!-- 从数据库获得问题 -->
+    <select id="getQuestion" resultType="ssm.entity.Question">
+    select * from questioninfo
+    </select>
+    <!-- 遍历所有教师 -->
+    <resultMap type="ssm.entity.Teacher" id="getteacher">
+    <id property="teacher_id" column="teacher_id"/>
+    <result property="teacher_name" column="teacher_name"/>
+    <result property="insid" column="insid"/>
+    <result property="teacher_subid" column="teacher_subid"/>
+    <result property="password" column="password"/>
+    
+    <association property="ins" javaType="ssm.entity.Ins">
+    <id property="ins_id" column="ins_id"/>
+    <result property="ins_name" column="ins_name"/>
+    </association>
+    <association property="subject" javaType="ssm.entity.Subject">
+    <id property="subject_id" column="subject_id"/>
+    <result property="subject_name" column="subject_name"/>
+    </association>
+    </resultMap>
+    <!-- 根据映射ID实现一对多的关联查询 -->
+    <select id="teacherList" parameterType="String" resultMap="getteacher">
+    select * from teacher,ins,subject where ins.ins_id = 
+    teacher.teacher_insid and subject.subject_id = teacher.
+    teacher_subid and ins_name = #{ins_name}
+    </select>
+    
+    <!-- 根据学院和课程查找教师 -->
+    <select id="getTeacherBysubclass" resultMap="teacher" parameterType="ssm.entity.Teacher">
+    	 select * from teacher,subject,ins
+    	 where ins.ins_id = teacher.teacher_insid and subject.subject_id = teacher.teacher_subid 
+    	 and teacher_subid=#{teacher_subid} and teacher_insid=#{teacher_insid}
+    </select>
+    
+    
+    <!-- 根据投票者查询被投票者信息 -->
+    <select id="getIsvote" parameterType="int" resultType="ssm.entity.Answer">
+    select * from answer where vote_id=#{vote_id}
+    </select>
+</mapper>

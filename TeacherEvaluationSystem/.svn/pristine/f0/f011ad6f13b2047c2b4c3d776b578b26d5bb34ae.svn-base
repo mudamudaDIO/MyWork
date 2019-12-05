@@ -1,0 +1,46 @@
+package ssm.test;
+
+import java.util.List;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import ssm.entity.Classroom;
+import ssm.entity.Ins;
+import ssm.entity.Question;
+import ssm.entity.Student;
+import ssm.entity.Subject;
+import ssm.service.AdminService;
+
+
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations= {"classpath:applicationContext.xml","classpath:spring-mvc.xml"})
+public class AdminServiceTest {
+	@Autowired
+	private AdminService adminservice;
+	
+	//²âÊÔ
+	@Test
+	public void test() {
+		Student stu=new Student();
+		stu.setStudent_id(169000930);
+		stu.setPassword("169000930");
+		int i=adminservice.updateStuPass(stu);
+		if(i>0) {
+			System.out.println("³É¹¦");
+		}else {
+			System.out.println("Ê§°Ü");
+		}
+//		List<Student> list=adminservice.getStudents();
+//		for(Student s:list) {
+//			System.out.println(s.getStudent_id()+" "+s.getStudent_name());
+//		}
+		
+	}
+	
+	 
+}

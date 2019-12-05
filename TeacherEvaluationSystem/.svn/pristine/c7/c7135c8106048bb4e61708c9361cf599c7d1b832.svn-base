@@ -1,0 +1,42 @@
+package ssm.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import ssm.dao.AdminDao;
+import ssm.entity.Classroom;
+import ssm.entity.Student;
+import ssm.entity.Subject;
+
+@Service
+public class AdminService {
+	@Autowired
+	private AdminDao admindao;
+	
+	/**
+	 * 添加班级
+	 * @param classroom
+	 * @return int
+	 */
+	public int addClass(Classroom classroom) {
+		return admindao.addClass(classroom);
+	}
+	
+	/**
+	 * 添加课程
+	 * @param subject
+	 * @return int
+	 */
+	public int addSubject(Subject subject) {
+		return admindao.addSubject(subject);
+	}
+	/**
+	 * 删除课程
+	 * @param id
+	 * @return int
+	 */
+	public int delSubjectByid(int id) {
+		return admindao.delSubjectByid(id);
+	}
+	
+}

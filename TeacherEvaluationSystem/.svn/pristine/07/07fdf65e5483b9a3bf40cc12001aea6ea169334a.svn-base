@@ -1,0 +1,52 @@
+package ssm.test;
+
+import java.util.List;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import ssm.entity.Classroom;
+import ssm.entity.Ins;
+import ssm.entity.Permission;
+import ssm.entity.Question;
+import ssm.entity.Roles;
+import ssm.entity.Student;
+import ssm.entity.Subject;
+import ssm.service.AdminService;
+
+
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations= {"classpath:applicationContext.xml","classpath:spring-mvc.xml"})
+public class AdminServiceTest {
+	@Autowired
+	private AdminService adminservice;
+	
+	//测试
+	@Test
+	public void test() {
+		Permission per=new Permission();
+		per.setPermission_name("角色菜单");
+		per.setPermission_grade(2);
+		per.setUrl("null");
+		per.setParetn_num(23);
+		per.setSort(3);
+		per.setDescribe("2级菜单角色菜单");
+		int i=adminservice.addPer(per);
+		if(i>0) {
+			System.out.println("成功");
+		}else {
+			System.out.println("失败");
+		}
+//		List<Roles> list=adminservice.getroles();
+//		for(Roles r:list) {
+//			System.out.println(r.getRole_name());
+//		}
+		
+	}
+	
+	 
+}

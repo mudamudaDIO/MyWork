@@ -1,0 +1,37 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>教师修改密码</title>
+<script type="text/javascript" src="${pageContext.request.contextPath}/scripts/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+//实现AJAX异步提交
+function change(){
+	var url = "${pageContext.request.contextPath}/changeTeacherpass";
+	var oldpassword = $("oldpass").val();
+	var newpass = $("newpass").val();
+	var param = {oldpass:oldpass,newpass:newpass};
+	$.post(url,param,function(){
+		alert(data.content);
+	})
+}
+</script>
+</head>
+<body>
+<form>
+请输入原密码：<input type="text" id="oldpass">
+请输入新密码：<input type="text" id="newpass">
+请重复新密码：<input type="text" id="respass">
+<input type="button" value="确认修改" onclick="change()">
+</form>
+</body>
+<script type="text/javascript">
+var NP = $("newpass").val();
+var RP = $("respass").val();
+if(RP!=NP){
+	alert("重复密码应该一致！！");
+}
+</script>
+</html>

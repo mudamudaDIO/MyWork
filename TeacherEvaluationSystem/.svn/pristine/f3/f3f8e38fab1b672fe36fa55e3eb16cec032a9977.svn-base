@@ -1,0 +1,19 @@
+package ssm.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+//登录控制器
+@Controller
+public class LoginController {
+	//进入登录页面
+	@RequestMapping("/login")
+	public ModelAndView login() {
+		ModelAndView mv=new ModelAndView("login");//跳转到login.jsp页面
+		return mv;//返回mv
+	}
+	
+	//学生登录反馈
+	
+}

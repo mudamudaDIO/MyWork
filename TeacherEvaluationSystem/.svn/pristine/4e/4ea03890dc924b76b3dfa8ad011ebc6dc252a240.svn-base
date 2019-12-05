@@ -1,0 +1,221 @@
+package ssm.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import ssm.dao.AdminDao;
+import ssm.entity.Classroom;
+import ssm.entity.Ins;
+import ssm.entity.Permission;
+import ssm.entity.Question;
+import ssm.entity.Roles;
+import ssm.entity.Student;
+import ssm.entity.Subject;
+
+@Service
+public class AdminService {
+	@Autowired
+	private AdminDao admindao;
+	
+	/**
+	 * 添加班级
+	 * @param classroom
+	 * @return int
+	 */
+	public int addClass(Classroom classroom) {
+		return admindao.addClass(classroom);
+	}
+	/**
+	 * 删除班级
+	 * @param id
+	 * @return int
+	 */
+	public int delClass(int id) {
+		return admindao.delClassByid(id);
+	}
+	/**
+	 * 查询班级
+	 * @return list
+	 */
+	public List<Classroom> getClassroom(){
+		return admindao.getClassroom();
+	}
+	
+	
+	/**
+	 * 添加课程
+	 * @param subject
+	 * @return int
+	 */
+	public int addSubject(Subject subject) {
+		return admindao.addSubject(subject);
+	}
+	/**
+	 * 删除课程
+	 * @param id
+	 * @return int
+	 */
+	public int delSubjectByid(int id) {
+		return admindao.delSubjectByid(id);
+	}
+	/**
+	 * 修改课程
+	 * @param subject
+	 * @return int
+	 */
+	public int updateSubject(Subject subject) {
+		return admindao.updateSubject(subject);
+	}
+	/**
+	 * 查询所有课程
+	 * @return list
+	 */
+	public List<Subject> getSubject(){
+		return admindao.getSubject();
+	}
+	
+	/**
+	 * 添加院系
+	 * @param ins
+	 * @return Int
+	 */
+	public int addIns(Ins ins) {
+		return admindao.addIns(ins);
+	}
+	/**
+	 * 删除院系
+	 * @param id
+	 * @return int
+	 */
+	public int delIns(int id) {
+		return admindao.delInsByid(id);
+	}
+	/**
+	 * 修改院系名
+	 * @param ins
+	 * @return
+	 */
+	public int updateIns(Ins ins) {
+		return admindao.updateIns(ins);
+	}
+	/**
+	 * 查询所有院系
+	 * @return list
+	 */
+	public List<Ins> getIns(){
+		return admindao.getIns();
+	}
+	
+	/**
+	 * 添加问题
+	 * @param q
+	 * @return int
+	 */
+	public int addQuestion(Question q) {
+		return admindao.addQuestion(q);
+	}
+	/**
+	 * 删除问题
+	 * @param id
+	 * @return int
+	 */
+	public int delQuestion(int id) {
+		return admindao.delQuestionByid(id);
+	}
+	/**
+	 * 修改问题
+	 * @param q
+	 * @return int
+	 */
+	public int updateQuestion(Question q) {
+		return admindao.updateQuestion(q);
+	}
+	/**
+	 * 查询所有问题
+	 * @return list
+	 */
+	public List<Question> getQuestion(){
+		return admindao.getQUestin();
+	}
+	
+	/**
+	 * 添加学生
+	 * @param stu
+	 * @return int
+	 */
+	public int addStudent(Student stu) {
+		return admindao.addStudent(stu);
+	}
+	
+	/**
+	 * 删除学生
+	 * @param id
+	 * @return int
+	 */
+	public int delStudent(int id) {
+		return admindao.delStudentByid(id);
+	}
+	
+	/**
+	 * 重置学生密码
+	 * @param stu
+	 * @return int
+	 */
+	public int updateStuPass(Student stu) {
+		return admindao.updateStuPassByid(stu);
+	}
+	
+	/**
+	 * 查询学生
+	 * @return list
+	 */
+	public List<Student> getStudents(){
+		return admindao.getStudents();
+	}
+	
+	/**
+	 * 添加角色
+	 * @param role
+	 * @return int
+	 */
+	public int addRole(Roles role) {
+		return admindao.addRole(role);
+	}
+	
+	/**
+	 * 删除角色
+	 * @param id
+	 * @return int
+	 */
+	public int delRole(int id) {
+		return admindao.delRole(id);
+	}
+	
+	/**
+	 * 修改角色信息
+	 * @param role
+	 * @return
+	 */
+	public int updateRole(Roles role) {
+		return admindao.updateRole(role);
+	}
+	
+	/**
+	 * 获取所有角色
+	 * @return List
+	 */
+	public List<Roles> getroles(){
+		return admindao.getRoles();
+	}
+	
+	/**
+	 * 添加菜单
+	 * @param per
+	 * @return
+	 */
+	public int addPer(Permission per) {
+		return admindao.addPer(per);
+	}
+}

@@ -1,0 +1,43 @@
+package ssm.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import ssm.entity.ResultMsg;
+import ssm.entity.Student;
+import ssm.service.StudentService;
+
+//学生控制器
+@Controller
+@RequestMapping("/student")
+public class StudentController {
+	@Autowired
+	private StudentService studentService;
+	
+	//个人中心页面
+	@RequestMapping("/allteachermsg")
+	public ModelAndView center() {
+		ModelAndView mv=new ModelAndView("student/center");
+		return mv;
+	}
+	 
+	//修改密码
+	@RequestMapping("/changePass")
+	@ResponseBody
+	public ResultMsg changePass(String password,int studnetid) {
+		Student stu=new Student();//创建student对象
+		stu.setPassword(password);
+		stu.setStudent_id(studnetid);//传递数据
+		int i=studentService.changePass(stu);//调用修改密码方法
+		ResultMsg rs=null;
+		if(i>0) {
+			rs=new ResultMsg(1, "修改成功");
+		}else {
+			rs=new ResultMsg(0, "修改失败");
+		}
+		return rs;
+	}
+}

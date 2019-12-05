@@ -1,0 +1,12 @@
+package ssm.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import ssm.dao.StudentDao;
+
+@Service
+public class StudentService {
+	@Autowired
+	private StudentDao studentdao;
+}

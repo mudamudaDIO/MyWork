@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 教师表的查询 -->
+
+<mapper namespace="ssm.dao.TeacherDao">
+    <select id="FindTeacher" parameterType="int" resultType="int">
+    select count(1) from teacher WHERE teacher_id = #{teacher_id}
+    </select>
+    <select id="FindTeacherMSG" parameterType="int" resultType="ssm.entity.Teacher">
+    select * from teacher WHERE teacher_id = #{teacher_id}
+    </select>
+    <update id="changepass" parameterType="ssm.entity.Teacher">
+    update teacher set password = #{password} where teacher_id=#{teacher_id}
+    </update>
+    
+    <!-- 自定义教师和院系、学科的映射 -->
+    <resultMap type="ssm.entity.Teacher" id="teacher">
+    <id property="teacher_id" column="teacher_id"/>
+    <result property="teacher_name" column="teacher_name"/>
+    <result property="insid" column="insid"/>
+    <result property="teacher_subid" column="teacher_subid"/>
+    <result property="password" column="password"/>
+    
+    <association property="ins" javaType="ssm.entity.Ins">
+    <id property="ins_id" column="ins_id"/>
+    <result property="ins_name" column="ins_name"/>
+    </association>
+    <association property="subject" javaType="ssm.entity.Subject">
+    <id property="subject_id" column="subject_id"/>
+    <result property="subject_name" column="subject_name"/>
+    </association>
+    </resultMap>
+    <!-- 根据映射ID实现一对多的关联查询 -->
+    <select id="getteacherallmsg" parameterType="int" resultMap="teacher">
+    select * from teacher,ins,subject where ins.ins_id = 
+    teacher.teacher_insid and subject.subject_id = teacher.
+    teacher_subid and teacher_id = #{teacher_id}
+    </select>
+    
+    <!-- 教师对同行进行评价，将评价分数存入数据库 -->
+    <insert id="addVoteScore" parameterType="ssm.entity.Answer">
+    insert into answer(vote_id,bevote_id,answer_1,answer_2,answer_3
+    ,answer_4,answer_5,answer_6,answer_7,answer_8,answer_9,answer_10
+    ,score)
+     values(#{vote_id},#{bevote_id},#{answer_1},#{answer_2},#{answer_3}
+     ,#{answer_4},#{answer_5},#{answer_6},#{answer_7},#{answer_8},#{answer_9}
+     ,#{answer_10},#{score}) 
+    </insert>
+    
+    <!-- 获取同行对自己评价的分数 -->
+    <select id="getscore" parameterType="int" resultType="ssm.entity.Answer">
+    select teacher_name,score from answer,teacher where answer.vote_id = teacher.teacher_id
+    and bevote_id = #{teacher_id}
+    </select>
+    
+    <!-- 从数据库获得问题 -->
+    <select id="getQuestion" resultType="ssm.entity.Question">
+    
+    </select>
+</mapper>

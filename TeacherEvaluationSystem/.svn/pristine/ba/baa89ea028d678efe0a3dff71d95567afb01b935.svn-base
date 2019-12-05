@@ -1,0 +1,39 @@
+package ssm.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import ssm.dao.TeacherDao;
+import ssm.entity.Teacher;
+
+@Service
+public class TeacherService {
+	@Autowired
+	private TeacherDao teacherdao;
+	/**
+	 * 查询教师工号
+	 * @param teacher_id
+	 * @return
+	 */
+	public int FindTeacher(int teacher_id) {
+		return teacherdao.FindTeacher(teacher_id);
+	}
+	/**
+	 * 查询教师所有信息
+	 * @param teacher_id
+	 * @return
+	 */
+	public Teacher FindTeacherMSG(int teacher_id) {
+		return teacherdao.FindTeacherMSG(teacher_id);
+	}
+	
+	/**
+	 * 修改教师密码
+	 * @param password
+	 * @param teacher_id
+	 * @return
+	 */
+	public int changepass(Teacher teacher) {
+		return teacherdao.changepass(teacher);
+	}
+}

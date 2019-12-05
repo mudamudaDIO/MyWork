@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ssm.dao.StudentDao">
+      <select id="getStudent" parameterType="ssm.entity.Student" resultType="ssm.entity.Student">
+      		select * from studentinfo where 
+      		student_id=#{student_id} and password=#{password}
+      </select>
+      
+      <update id="changePass" parameterType="ssm.entity.Student">
+      		update  studentinfo
+      		set password=#{password}
+      		where student_id=#{student_id} 
+      </update>
+      
+      <select id="getStudentByid" parameterType="int" resultType="ssm.entity.Student">
+      		select * from studentinfo where 
+      		student_id=#{student_id}
+      </select>
+</mapper>

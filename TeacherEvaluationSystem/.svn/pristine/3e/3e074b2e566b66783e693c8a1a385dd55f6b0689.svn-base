@@ -1,0 +1,71 @@
+package ssm.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import ssm.dao.TeacherDao;
+import ssm.entity.Answer;
+import ssm.entity.Teacher;
+
+@Service
+public class TeacherService {
+	@Autowired
+	private TeacherDao teacherdao;
+	/**
+	 * 查询教师工号
+	 * @param teacher_id
+	 * @return
+	 */
+	public int FindTeacher(int teacher_id) {
+		return teacherdao.FindTeacher(teacher_id);
+	}
+	/**
+	 * 查询教师所有信息
+	 * @param teacher_id
+	 * @return
+	 */
+	public Teacher FindTeacherMSG(int teacher_id) {
+		return teacherdao.FindTeacherMSG(teacher_id);
+	}
+	
+	/**
+	 * 修改教师密码
+	 * @param password
+	 * @param teacher_id
+	 * @return
+	 */
+	public int changepass(Teacher teacher) {
+		return teacherdao.changepass(teacher);
+	}
+	
+	
+	/**
+	 * 根据教师ID查询教师所有信息
+	 * 包括所在院系  所教科目
+	 * @return
+	 */
+	public List<Teacher> getteacherallmsg(int teacher_id){
+		return teacherdao.getteacherallmsg(teacher_id);
+	}
+	
+	
+	/**
+	 * 教师同行评价将结果及分数存入数据库
+	 * @param answer
+	 * @return
+	 */
+	public int addVoteScore(Answer answer) {
+		return teacherdao.addVoteScore(answer);
+	}
+	
+	/**
+	 * 获取同行对自己的评价
+	 * @param teacher_id
+	 * @return
+	 */
+	public List<Answer> getscore(int teacher_id) {
+		return teacherdao.getscore(teacher_id);
+	}
+}

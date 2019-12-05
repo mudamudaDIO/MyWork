@@ -1,0 +1,14 @@
+package ssm.dao;
+
+import ssm.entity.Answer;
+import ssm.entity.Student;
+
+public interface StudentDao {
+	Student getStudent(Student student);//取出学生
+	
+	int changePass(Student student);//修改密码
+	
+	Student getStudentByid(int id);//根据学号查询学生
+	
+	int addAnswer(Answer answer);//添加评价
+}

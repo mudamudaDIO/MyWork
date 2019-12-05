@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ssm.dao.AdminDao">
+	 <!-- class表新增数据 -->
+     <insert id="addClass" parameterType="ssm.entity.Classroom">
+     	insert into class(class_id,class_name)
+     	values(#{class_id},#{class_name}) 
+     </insert>
+     <!-- class表删除数据 -->
+      <delete id="delClassByid" parameterType="int">
+     	delete from class where class_id=#{id}
+     </delete> 
+     <!-- class表查询数据 -->
+     <select id="getClassroom" resultType="ssm.entity.Classroom">
+     	select * from class
+     </select>
+     
+     <!-- subject表新增数据 -->
+     <insert id="addSubject" parameterType="ssm.entity.Subject">
+     	insert into subject(subject_id,subject_name)
+     	values(#{subject_id},#{subject_name})
+     </insert>
+     <!-- subject表删除数据 -->
+     <delete id="delSubjectByid" parameterType="int">
+     	delete from subject where subject_id=#{id}
+     </delete> 
+     <!-- subject表修改数据 -->
+     <update id="updateSubject" parameterType="ssm.entity.Subject">
+     	update subject
+     	set subject_name=#{subject_name}
+     	where subject_id=#{subject_id}
+     </update>
+     <!-- subject表查询数据 -->
+     <select id="getSubject" resultType="ssm.entity.Subject">
+     	select * from subject
+     </select>
+     
+     <!-- ins表新增数据 -->
+     <insert id="addIns" parameterType="ssm.entity.Ins">
+     	insert into ins(ins_id,ins_name)
+     	values(#{ins_id},#{ins_name})
+     </insert>
+     <!-- ins表删除数据 -->
+     <delete id="delInsByid" parameterType="int">
+     	delete from ins where ins_id=#{id}
+     </delete> 
+      <!-- int表修改数据 -->
+     <update id="updateIns" parameterType="ssm.entity.Ins">
+     	update ins
+     	set ins_name=#{ins_name}
+     	where ins_id=#{ins_id}
+     </update>
+     <!-- ins表查询数据 -->
+     <select id="getIns" resultType="ssm.entity.Ins">
+     	select * from ins
+     </select>
+     
+     
+</mapper>

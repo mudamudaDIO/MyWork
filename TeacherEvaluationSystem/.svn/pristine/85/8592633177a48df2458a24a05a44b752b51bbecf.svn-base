@@ -1,0 +1,39 @@
+package ssm.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import ssm.entity.ResultMsg;
+import ssm.entity.Student;
+import ssm.service.StudentService;
+
+//登录控制器
+@Controller
+public class LoginController {
+	@Autowired
+	private StudentService studentService;
+	//进入登录页面
+	@RequestMapping("/login")
+	public ModelAndView login() {
+		ModelAndView mv=new ModelAndView("login");//跳转到login.jsp页面
+		return mv;//返回mv
+	}
+	
+	//学生登录反馈
+	@RequestMapping("/Stuloginsub")
+	public ResultMsg loginsub(int sid,String password) {
+		Student stu=new Student();//实例化
+		stu.setStudent_id(sid);//传值
+		stu.setPassword(password);
+		boolean flag=studentService.login(stu);//得到登录反馈
+		ResultMsg rs=null;
+		if(flag) {
+			rs=new ResultMsg(1, "登录成功");//成功
+		}else {
+			rs=new ResultMsg(0, "登录失败");//失败
+		}
+		return rs;
+	}
+}

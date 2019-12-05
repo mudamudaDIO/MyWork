@@ -1,0 +1,107 @@
+package ssm.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import ssm.dao.AdminDao;
+import ssm.entity.Classroom;
+import ssm.entity.Ins;
+import ssm.entity.Student;
+import ssm.entity.Subject;
+
+@Service
+public class AdminService {
+	@Autowired
+	private AdminDao admindao;
+	
+	/**
+	 * 添加班级
+	 * @param classroom
+	 * @return int
+	 */
+	public int addClass(Classroom classroom) {
+		return admindao.addClass(classroom);
+	}
+	/**
+	 * 删除班级
+	 * @param id
+	 * @return int
+	 */
+	public int delClass(int id) {
+		return admindao.delClassByid(id);
+	}
+	/**
+	 * 查询班级
+	 * @return list
+	 */
+	public List<Classroom> getClassroom(){
+		return admindao.getClassroom();
+	}
+	
+	
+	/**
+	 * 添加课程
+	 * @param subject
+	 * @return int
+	 */
+	public int addSubject(Subject subject) {
+		return admindao.addSubject(subject);
+	}
+	/**
+	 * 删除课程
+	 * @param id
+	 * @return int
+	 */
+	public int delSubjectByid(int id) {
+		return admindao.delSubjectByid(id);
+	}
+	/**
+	 * 修改课程
+	 * @param subject
+	 * @return int
+	 */
+	public int updateSubject(Subject subject) {
+		return admindao.updateSubject(subject);
+	}
+	/**
+	 * 查询所有课程
+	 * @return list
+	 */
+	public List<Subject> getSubject(){
+		return admindao.getSubject();
+	}
+	
+	/**
+	 * 添加院系
+	 * @param ins
+	 * @return Int
+	 */
+	public int addIns(Ins ins) {
+		return admindao.addIns(ins);
+	}
+	/**
+	 * 删除院系
+	 * @param id
+	 * @return int
+	 */
+	public int delIns(int id) {
+		return admindao.delInsByid(id);
+	}
+	/**
+	 * 修改院系名
+	 * @param ins
+	 * @return
+	 */
+	public int updateIns(Ins ins) {
+		return admindao.updateIns(ins);
+	}
+	/**
+	 * 查询所有院系
+	 * @return list
+	 */
+	public List<Ins> getIns(){
+		return admindao.getIns();
+	}
+}

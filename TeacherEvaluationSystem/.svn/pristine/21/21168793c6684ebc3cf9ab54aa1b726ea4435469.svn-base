@@ -1,0 +1,46 @@
+package ssm.entity;
+
+public class Teacher {
+	private Integer teacher_id;
+	private String teacher_name;
+	private Integer teach_class;
+	private String teacher_ins;
+	private String teacher_sub;
+	private String password;
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public Integer getTeacher_id() {
+		return teacher_id;
+	}
+	public void setTeacher_id(Integer teacher_id) {
+		this.teacher_id = teacher_id;
+	}
+	public String getTeacher_name() {
+		return teacher_name;
+	}
+	public void setTeacher_name(String teacher_name) {
+		this.teacher_name = teacher_name;
+	}
+	public Integer getTeach_class() {
+		return teach_class;
+	}
+	public void setTeach_class(Integer teach_class) {
+		this.teach_class = teach_class;
+	}
+	public String getTeacher_ins() {
+		return teacher_ins;
+	}
+	public void setTeacher_ins(String teacher_ins) {
+		this.teacher_ins = teacher_ins;
+	}
+	public String getTeacher_sub() {
+		return teacher_sub;
+	}
+	public void setTeacher_sub(String teacher_sub) {
+		this.teacher_sub = teacher_sub;
+	}
+}

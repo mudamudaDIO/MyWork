@@ -1,0 +1,26 @@
+package ssm.dao;
+
+import java.util.List;
+
+import ssm.entity.Classroom;
+import ssm.entity.Ins;
+import ssm.entity.Subject;
+
+public interface AdminDao {
+	/*操作class表*/
+	int addClass(Classroom classroom); //添加班级
+	int delClassByid(int id);//删除班级
+	List<Classroom> getClassroom();//查询所有班级
+	
+	/*操作subject表*/
+	int addSubject(Subject subject);//添加课程
+	int delSubjectByid(int id);//删除课程
+	int updateSubject(Subject subject);//修改课程名
+	List<Subject> getSubject();//查询所有课程
+	
+	/*操作ins表*/
+	int addIns(Ins ins);//添加院系
+	int delInsByid(int id);//删除院系
+	int updateIns(Ins ins);//修改院名
+	List<Ins> getIns();//查询所有院系
+}

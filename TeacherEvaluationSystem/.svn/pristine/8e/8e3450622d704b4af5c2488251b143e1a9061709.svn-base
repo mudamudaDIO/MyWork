@@ -1,0 +1,49 @@
+package ssm.test;
+
+import java.util.List;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import ssm.entity.Classroom;
+import ssm.entity.Ins;
+import ssm.entity.Question;
+import ssm.entity.Subject;
+import ssm.service.AdminService;
+
+
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations= {"classpath:applicationContext.xml","classpath:spring-mvc.xml"})
+public class AdminServiceTest {
+	@Autowired
+	private AdminService adminservice;
+	
+	//测试
+	@Test
+	public void test() {
+		Question q=new Question();
+		q.setQuestion_id(1);
+		q.setQuestion("你对老师满意不？");
+		q.setAnswer_A("非常满意");
+		q.setAnswer_B("很满意");
+		q.setAnswer_C("满意");
+		q.setAnswer_D("很不满意");
+		int i=adminservice.delQuestion(1);
+		if(i>0) {
+			System.out.println("成功");
+		}else {
+			System.out.println("失败");
+		}
+//		List<Ins> list=adminservice.getIns();
+//		for(Ins ins:list) {
+//			System.out.println(ins.getIns_id()+" "+ins.getIns_name());
+//		}
+		
+	}
+	
+	 
+}

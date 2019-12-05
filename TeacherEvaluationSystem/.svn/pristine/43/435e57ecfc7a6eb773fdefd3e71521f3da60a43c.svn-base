@@ -1,0 +1,368 @@
+package ssm.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import ssm.entity.Classroom;
+import ssm.entity.Ins;
+import ssm.entity.Permission;
+import ssm.entity.Question;
+import ssm.entity.ResultMsg;
+import ssm.entity.Roles;
+import ssm.entity.Student;
+import ssm.entity.Subject;
+import ssm.entity.Teacher;
+import ssm.service.AdminService;
+import ssm.service.LoginService;
+
+@Controller
+@RequestMapping("/admin")
+public class AdminController {
+	@Autowired 
+	AdminService adminservice;
+	@Autowired
+	LoginService loginservice;
+	
+	/********************************查看信息跳转页面开始**********************************************************/
+	//查看学生
+	@RequestMapping("/lookStudents")
+	public ModelAndView lookStudents() {
+		List<Student> list=adminservice.getStudents();
+		ModelAndView mv=new ModelAndView("admin/lookStudents");
+		mv.addObject("students", list);
+		return mv;
+	}
+	
+	//查看教师
+	@RequestMapping("/lookTeachers")
+	public ModelAndView lookTeachers() {
+		List<Teacher> list=adminservice.getTeachers();
+		ModelAndView mv=new ModelAndView("admin/lookTeachers");
+		mv.addObject("Teachers", list);
+		return mv;
+	}
+	//查看院系
+	@RequestMapping("/lookIns")
+	public ModelAndView lookIns() {
+		List<Ins> list=adminservice.getIns();
+		ModelAndView mv=new ModelAndView("admin/lookIns");
+		mv.addObject("ins", list);
+		return mv;
+	}
+	//查看菜单
+	@RequestMapping("/lookMenu")
+	public ModelAndView lookMenu() {
+		List<Permission> list=loginservice.getper();
+		ModelAndView mv=new ModelAndView("admin/lookMenus");
+		mv.addObject("menu", list);
+		return mv;
+	}
+	//查看角色
+	@RequestMapping("/lookRoles")
+	public ModelAndView lookRoles() {
+		List<Roles> list=adminservice.getroles();
+		ModelAndView mv=new ModelAndView("admin/lookRoles");
+		mv.addObject("roles", list);
+		return mv;
+	}
+	//查看课程
+	@RequestMapping("/lookSubjects")
+	public ModelAndView lookSubjects() {
+		List<Subject> list=adminservice.getSubject();
+		ModelAndView mv=new ModelAndView("admin/lookSubjects");
+		mv.addObject("subject", list);
+		return mv;
+	}
+	//查看试题
+	@RequestMapping("/lookTest")
+	public ModelAndView lookTest() {
+		List<Question> list=adminservice.getQuestion();
+		ModelAndView mv=new ModelAndView("admin/lookTest");
+		mv.addObject("question", list);
+		return mv;
+	}
+	/********************************查看信息跳转页面结束**********************************************************/
+	/********************************添加页面开始***************************************************************/
+	//添加院系
+	@RequestMapping("/addIns")
+	public ModelAndView addIns() {	
+		ModelAndView mv=new ModelAndView("admin/addIns");
+		return mv;
+	}
+	//添加菜单
+	@RequestMapping("/addMenu")
+	public ModelAndView addMenu() {	
+		ModelAndView mv=new ModelAndView("admin/addMenu");
+		return mv;
+	}
+	//添加角色
+	@RequestMapping("/addRoles")
+	public ModelAndView addRoles() {	
+		ModelAndView mv=new ModelAndView("admin/addRoles");
+		return mv;
+	}
+	//添加学生
+	@RequestMapping("/addStudent")
+	public ModelAndView addStudent() {	
+		List<Classroom> classroom=adminservice.getClassroom();
+		List<Ins> ins=adminservice.getIns();
+		ModelAndView mv=new ModelAndView("admin/addStudent");
+		mv.addObject("classroom", classroom);
+		mv.addObject("ins",ins);
+		return mv;
+	}
+	//添加课程
+	@RequestMapping("/addSubject")
+	public ModelAndView addSubject() {	
+		ModelAndView mv=new ModelAndView("admin/addSubject");
+		return mv;
+	}
+	//添加教师
+	@RequestMapping("/addTeacher")
+	public ModelAndView addTeacher() {	
+		ModelAndView mv=new ModelAndView("admin/addTeacher");
+		List<Ins> ins=adminservice.getIns();
+		List<Subject> subject=adminservice.getSubject();
+		mv.addObject("ins",ins);
+		mv.addObject("sub", subject);
+		return mv;
+	}
+	//添加试题
+	@RequestMapping("/addTest")
+	public ModelAndView addTest() {	
+		ModelAndView mv=new ModelAndView("admin/addTest");
+		return mv;
+	}
+	/********************************添加页面结束***************************************************************/
+	
+	/********************************修改页面跳转开始************************************************************/
+	@RequestMapping("updateTeacher")
+	public ModelAndView updateTeacher(int id) {
+		ModelAndView mv=new ModelAndView("admin/updateTeacher");
+		List<Ins> ins=adminservice.getIns();
+		List<Subject> subject=adminservice.getSubject();
+		mv.addObject("ins",ins);
+		mv.addObject("sub", subject);
+		mv.addObject("id",id);
+		return mv;
+	}
+	/********************************修改页面跳转结束************************************************************/
+	
+	/********************************添加信息到数据库开始*********************************************************/
+	//添加学生到数据库
+	@RequestMapping("addStudentSubmit")
+	@ResponseBody
+	public ResultMsg addStudentSubmit(int student_id,String student_name,int classroom,int ins) {
+		Student stu=new Student();
+		stu.setStudent_id(student_id);
+		stu.setStudent_name(student_name);
+		stu.setStudent_ins(ins);
+		stu.setStudent_classid(classroom);
+		stu.setRole_id(2);
+		stu.setPassword(String.valueOf(student_id));//默认密码为学号
+		int i=adminservice.addStudent(stu);
+		ResultMsg rs=null;
+		if(i>0) {
+			rs=new ResultMsg(1, "添加成功");
+		}else {
+			rs=new ResultMsg(2, "添加失败");
+		}
+		return rs;
+		
+	}
+	
+	//添加教师到数据库
+	@RequestMapping("/addTeacherSubmit")
+	@ResponseBody
+	public ResultMsg addTeacherSubmit(int teacher_id,String teacher_name,int ins,int teacher_subid) {
+		Teacher teacher=new Teacher();
+		teacher.setTeacher_insid(ins);
+		teacher.setTeacher_id(teacher_id);
+		teacher.setTeacher_name(teacher_name);
+		teacher.setTeacher_subid(teacher_subid);
+		teacher.setRole_id(1);
+		teacher.setPassword(String.valueOf(teacher_id));
+		int i=adminservice.addTeacher(teacher);
+		ResultMsg rs=null;
+		if(i>0) {
+			rs=new ResultMsg(1, "添加成功");
+		}else {
+			rs=new ResultMsg(2, "添加失败");
+		}
+		return rs;
+	}
+	
+	//添加问题到数据库
+		@RequestMapping("/AddTestSubmit")
+		@ResponseBody
+		public ResultMsg AddTestSubmit(String question,String answer_A,String answer_B,String answer_C,String answer_D) {
+			Question q=new Question();
+			q.setQuestion(question);
+			q.setAnswer_A(answer_A);
+			q.setAnswer_B(answer_B);
+			q.setAnswer_C(answer_C);
+			q.setAnswer_D(answer_D);
+			int i=adminservice.addQuestion(q);
+			ResultMsg rs=null;
+			if(i>0) {
+				rs=new ResultMsg(1, "添加成功");
+			}else {
+				rs=new ResultMsg(2, "添加失败");
+			}
+			return rs;
+			
+		}
+	//添加学院信息	
+	@RequestMapping("/addInsSubmit")
+	@ResponseBody
+	public ResultMsg addInsSubmit(int ins_id,String ins_name) {
+		Ins ins=new Ins();
+		ins.setIns_id(ins_id);
+		ins.setIns_name(ins_name);
+		int i=adminservice.addIns(ins);
+		ResultMsg rs=null;
+		if(i>0) {
+			rs=new ResultMsg(1, "添加成功");
+		}else {
+			rs=new ResultMsg(2, "添加失败");
+		}
+		return rs;
+	}
+	
+	//添加课程信息
+	@RequestMapping("/addSubjectSubmit")
+	@ResponseBody
+	public ResultMsg addSubjectSubmit(int sub_id,String sub_name) {
+		Subject sub=new Subject();
+		sub.setSubject_id(sub_id);
+		sub.setSubject_name(sub_name);
+		int i=adminservice.addSubject(sub);
+		ResultMsg rs=null;
+		if(i>0) {
+			rs=new ResultMsg(1, "添加成功");
+		}else {
+			rs=new ResultMsg(2, "添加失败");
+		}
+		return rs;
+	}
+	//添加角色信息
+	@RequestMapping("/addRoleSubmit")
+	@ResponseBody
+	public ResultMsg addRoleSubmit(int id,String name,String describe) {
+		Roles role=new Roles();
+		role.setRole_id(id);
+		role.setRole_name(name);
+		role.setDescribes(describe);
+		int i=adminservice.addRole(role);
+		ResultMsg rs=null;
+		if(i>0) {
+			rs=new ResultMsg(1, "添加成功");
+		}else {
+			rs=new ResultMsg(2, "添加失败");
+		}
+		return rs;
+	}
+	
+	//添加菜单信息
+	@RequestMapping("/addMenuSubmit")
+	@ResponseBody
+	public ResultMsg addMenuSubmit(String name,String url,int grade,int parentnum,int sort,String describe) {
+		Permission per=new Permission();
+		per.setPermission_name(name);
+		per.setUrl(url);
+		per.setPermission_grade(grade);
+		per.setParetn_num(parentnum);
+		per.setSort(sort);
+		per.setDescribes(describe);
+		int i=adminservice.addPer(per);
+		ResultMsg rs=null;
+		if(i>0) {
+			rs=new ResultMsg(1, "添加成功");
+		}else {
+			rs=new ResultMsg(2, "添加失败");
+		}
+		return rs;
+	}
+	
+	//添加班级
+		@RequestMapping("/addClass")
+		@ResponseBody
+		public ResultMsg addClass(int classid,String classname) {
+			Classroom classroom=new Classroom();
+			classroom.setClass_id(classid);
+			classroom.setClass_name(classname);
+			int i=adminservice.addClass(classroom);
+			ResultMsg rs=null;
+			if(i>0) {
+				rs=new ResultMsg(1, "添加成功");
+			}else {
+				rs=new ResultMsg(0, "添加失败");
+			}
+			return rs;
+		}
+	/********************************添加信息到数据库结束**********************************************************/
+	/********************************删除信息开始***************************************************************/
+	
+	//删除教师
+	@RequestMapping("delTeacher")
+	@ResponseBody
+	public ResultMsg delTeacher(int id) {
+		ResultMsg rs=null;
+		int i=adminservice.delTeacher(id);
+		if(i>0) {
+			rs=new ResultMsg(1, "删除成功");
+		}else {
+			rs=new ResultMsg(1, "删除失败");
+		}
+		return rs;
+	}
+	//删除学生
+	//删除课程
+	//删除试题
+	//删除院系
+	//删除角色
+	//删除菜单
+	
+	/********************************删除信息结束***************************************************************/
+		
+	/********************************修改信息开始***************************************************************/
+	//重置教师密码
+	@RequestMapping("/changePass")
+	@ResponseBody
+	public ResultMsg changePass(int id) {
+		Teacher t=new Teacher();
+		t.setTeacher_id(id);
+		t.setPassword(String.valueOf(id));
+		ResultMsg rs=null;
+		int i=adminservice.updateTeacherPass(t);
+		if(i>0) {
+			rs=new ResultMsg(1, "删除成功");
+		}else {
+			rs=new ResultMsg(1, "删除失败");
+		}
+		return rs;
+	}
+	//修改教师所在学院/所教科目信息
+	@RequestMapping("/changeTeacherInfo")
+	@ResponseBody
+	public ResultMsg changeTeacherInfo(int id,int ins,int teacher_subid) {
+		Teacher t=new Teacher();
+		t.setTeacher_id(id);
+		t.setTeacher_insid(ins);
+		t.setTeacher_subid(teacher_subid);
+		ResultMsg rs=null;
+		int i=adminservice.updateTeacher(t);
+		if(i>0) {
+			rs=new ResultMsg(1, "修改成功");
+		}else {
+			rs=new ResultMsg(2, "修改失败");
+		}
+		return rs;
+	}
+	/********************************修改信息结束***************************************************************/
+}

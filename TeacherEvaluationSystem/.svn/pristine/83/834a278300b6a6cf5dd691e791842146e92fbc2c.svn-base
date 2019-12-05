@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ssm.dao.LoginDao">
+	  <resultMap type="ssm.entity.RolePermission" id="permission">
+	  		<id property="id" column="id"/>
+	  		<result property="role_id" column="role_id"/>
+	  		<result property="per_id" column="per_id"/>
+	  		<association property="per" javaType="ssm.entity.Permission">
+	  			<id property="permission_id" column="permission_id"></id>
+	  			<result property="permission_name" column="permission_name"/>
+	  			<result property="url" column="url"/>
+	  			<result property="permission_grade" column="permission_grade"/>
+	  			<result property="paretn_num" column="paretn_num"/>
+	  			<result property="sort" column="sort"/>
+	  			<result property="describe" column="describe"/>
+	  		</association>
+	  </resultMap>
+      <select id="getpers"  resultType="ssm.entity.Permission">
+      		select * from permissions
+      </select>
+      
+      <select id="getPerByRoleid" parameterType="int" resultMap="permission">
+      		select * from rolepermissions r
+      		left join permissions p on r.per_id=p.permission_id
+      		where role_id=#{roleid}
+      </select>
+</mapper>

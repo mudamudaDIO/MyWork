@@ -1,0 +1,68 @@
+package ssm.dao;
+
+import java.util.List;
+
+import ssm.entity.Classroom;
+import ssm.entity.Ins;
+import ssm.entity.Permission;
+import ssm.entity.Question;
+import ssm.entity.RolePermission;
+import ssm.entity.Roles;
+import ssm.entity.Student;
+import ssm.entity.Subject;
+import ssm.entity.Teacher;
+
+public interface AdminDao {
+	/*操作class表*/
+	int addClass(Classroom classroom); //添加班级
+	int delClassByid(int id);//删除班级
+	List<Classroom> getClassroom();//查询所有班级
+	
+	/*操作subject表*/
+	int addSubject(Subject subject);//添加课程
+	int delSubjectByid(int id);//删除课程
+	int updateSubject(Subject subject);//修改课程名
+	List<Subject> getSubject();//查询所有课程
+	
+	/*操作ins表*/
+	int addIns(Ins ins);//添加院系
+	int delInsByid(int id);//删除院系
+	int updateIns(Ins ins);//修改院名
+	List<Ins> getIns();//查询所有院系
+	
+	/*操作question表*/
+	int addQuestion(Question question);//添加问题
+	int delQuestionByid(int id);//删除题目
+	int updateQuestion(Question question);//修改问题
+	List<Question> getQUestin();//查询所有问题
+	Question getQUestinByID(int id); //根据ID查询问题
+	
+	/*操作studentinfo表*/
+	int addStudent(Student stu);//添加学生
+	int delStudentByid(int id);//删除学生
+	int updateStuPassByid(Student stu);//重置密码
+	List<Student> getStudents();//查询学生
+	
+	/*操作teacher表*/
+	int addTeacher(Teacher teacher);//添加教师
+	int delTeacherByid(int id);//删除教师
+	int updateTeacherPassByid(Teacher teacher);//重置密码
+	int updateTeacher(Teacher teacher);//修改学院与课程
+	List<Teacher> getTeachers();//查询教师
+	
+	/*操作roles表*/
+	int addRole(Roles role);//添加角色
+	int delRole(int id);//删除角色
+	int updateRole(Roles role);//修改角色信息
+	List<Roles> getRoles();//获取所有角色
+	
+	/*操作permissions表*/
+	int addPer(Permission per);//添加菜单
+	int delPer(int id);//删除菜单
+	int updatePer(Permission Per);//修改菜单信息
+	
+	/*操作rolepermissions表*/
+	int addRolePer(RolePermission roleper);//添加角色权限
+	int delRolePer(int id);//删除角色权限
+	int updateRolePer(RolePermission roleper);//修改角色权限
+}

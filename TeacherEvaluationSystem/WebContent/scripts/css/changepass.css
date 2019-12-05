@@ -1,0 +1,39 @@
+@charset "UTF-8";
+*{
+	margin: 0px;
+	padding: 0px;
+}
+body{
+	overflow: hidden;
+	font-size: 18px;
+}
+.main{
+	margin-left: 25%;
+	margin-top: 50px;
+}
+.main_1{
+	width: 400px;
+	height: 350px;
+	background-color: #f7f2fd;
+	line-height: 50px;
+}
+.top{
+	width: 400px;
+	height: 50px;
+	background-color: #a6d9aa;
+}
+label {
+	margin-left:20px;
+	font-family: cursive;
+	font-size: 24px;
+}
+input {
+	margin-top:60px;
+	height: 20px;
+}
+.button{
+	width: 400px;
+	height: 50px;
+	background-color: #a6d9aa;
+	margin-top: 50px;
+}

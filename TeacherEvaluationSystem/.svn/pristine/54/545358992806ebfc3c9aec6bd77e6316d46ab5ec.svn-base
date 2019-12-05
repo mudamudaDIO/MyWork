@@ -1,0 +1,78 @@
+package ssm.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import ssm.entity.Classroom;
+import ssm.entity.Ins;
+import ssm.entity.Permission;
+import ssm.entity.ResultMsg;
+import ssm.entity.Student;
+import ssm.entity.Teacher;
+import ssm.service.AdminService;
+import ssm.service.LoginService;
+
+@Controller
+@RequestMapping("/admin")
+public class AdminController {
+	@Autowired 
+	AdminService adminservice;
+	@Autowired
+	LoginService loginservice;
+	
+	//添加班级
+	@RequestMapping("/addClass")
+	@ResponseBody
+	public ResultMsg addClass(int classid,String classname) {
+		Classroom classroom=new Classroom();
+		classroom.setClass_id(classid);
+		classroom.setClass_name(classname);
+		int i=adminservice.addClass(classroom);
+		ResultMsg rs=null;
+		if(i>0) {
+			rs=new ResultMsg(1, "添加成功");
+		}else {
+			rs=new ResultMsg(0, "添加失败");
+		}
+		return rs;
+	}
+	//查看学生
+	@RequestMapping("/lookStudents")
+	public ModelAndView lookStudents() {
+		List<Student> list=adminservice.getStudents();
+		ModelAndView mv=new ModelAndView("admin/lookStudents");
+		mv.addObject("students", list);
+		return mv;
+	}
+	
+	//查看教师
+	@RequestMapping("/lookTeachers")
+	public ModelAndView lookTeachers() {
+		List<Teacher> list=adminservice.getTeachers();
+		ModelAndView mv=new ModelAndView("admin/lookTeachers");
+		mv.addObject("Teachers", list);
+		return mv;
+	}
+	//查看院系
+	@RequestMapping("/lookIns")
+	public ModelAndView lookIns() {
+		List<Ins> list=adminservice.getIns();
+		ModelAndView mv=new ModelAndView("admin/lookIns");
+		mv.addObject("ins", list);
+		return mv;
+	}
+	//查看菜单
+	@RequestMapping("/lookMenu")
+	public ModelAndView lookMenu() {
+		List<Permission> list=loginservice.getper();
+		ModelAndView mv=new ModelAndView("admin/lookIns");
+		mv.addObject("menu", list);
+		return mv;
+	}
+	
+}

@@ -1,0 +1,19 @@
+package ssm.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import ssm.dao.TeacherDao;
+import ssm.entity.Teacher;
+
+@Service
+public class TeacherService {
+	@Autowired
+	private TeacherDao teacherdao;
+	public int FindTeacher(String teacher_id) {
+		return teacherdao.FindTeacher(teacher_id);
+	}
+	public Teacher FindTeacherMSG(String teacher_id) {
+		return teacherdao.FindTeacherMSG(teacher_id);
+	}
+}

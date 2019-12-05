@@ -1,0 +1,69 @@
+package ssm.controller;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import ssm.entity.ResultMsg;
+import ssm.entity.Student;
+import ssm.entity.User;
+import ssm.service.StudentService;
+
+//学生控制器
+@Controller
+@RequestMapping("/student")
+public class StudentController {
+	@Autowired
+	private StudentService studentService;
+	/***********页面跳转开始***********************/
+	//个人中心页面
+	@RequestMapping("/allteachermsg")
+	public ModelAndView center(HttpSession session) {
+		User u=(User)session.getAttribute("user");
+		int id=u.getUserId();
+		System.out.println(id);
+		Student s=studentService.getStudentByid(id);
+		ModelAndView mv=new ModelAndView("student/center");
+		mv.addObject("studentmsg", s);		
+		return mv;
+	}
+	//修改密码页面
+	@RequestMapping("/changepass")
+	public ModelAndView changepass() {
+		ModelAndView mv=new ModelAndView("student/changepass");
+		return mv;
+	}
+	//评价教师（教师列表页面）
+	@RequestMapping("/teacherList")
+	public ModelAndView teacherList() {
+		ModelAndView mv=new ModelAndView("student/teacherList");
+		return mv;
+	}
+	/***********页面跳转结束***********************/
+	//修改密码
+	@RequestMapping("/changePassSubmit")
+	@ResponseBody
+	public ResultMsg changePass(String oldpassword,String newpass,int id) {
+		Student stu=studentService.getStudentByid(id);
+		ResultMsg rs=null;
+		if(stu.getPassword().equals(oldpassword)) {
+			Student student=new Student();
+			student.setPassword(newpass);
+			student.setStudent_id(id);
+			int i=studentService.changePass(student);//调用修改密码方法
+			if(i>0) {
+				rs=new ResultMsg(1, "修改成功");
+			}else {
+				rs=new ResultMsg(0, "修改失败");
+			}		
+		}else {
+			rs=new ResultMsg(3, "原密码不相符，修改失败");
+		}	
+		
+		return rs;
+	}
+}

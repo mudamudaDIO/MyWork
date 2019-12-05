@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ssm.dao.AdminDao">
+	<!-- 往数据库class表新增数据 -->
+     <insert id="addClass" parameterType="ssm.entity.Classroom">
+     	insert into class(class_id,class_name)
+     	values(#{class_id},#{class_name}) 
+     </insert>
+     
+     <!-- subject表新增数据 -->
+     <insert id="addSubject" parameterType="ssm.entity.Subject">
+     	insert into subject(subject_id,subject_name)
+     	valuse(#{subject_id},#{subject_name})
+     </insert>
+     <!-- subject表删除数据 -->
+     <delete id="delSubjectByid" parameterType="int">
+     	delete from subject where subject_id=#{id}
+     </delete> 
+     <!-- subject表修改数据 -->
+     <update id="updateSubject" parameterType="ssm.entity.Subject">
+     	update subject
+     	set subject_name={subject_name}
+     	where subject_id=#{subject_id}
+     </update>
+     <!-- subject表查询数据 -->
+     <select id="getSubject" resultType="ssm.entity.Subject">
+     	select * from subject
+     </select>
+     
+     <!-- ins表新增数据 -->
+     <!-- ins表删除数据 -->
+     <!-- ins表修改数据 -->
+     <!-- ins表查询数据 -->
+     
+     <!-- answer表新增数据 -->
+     <!-- answer表删除数据 -->
+     <!-- answer表修改数据 -->
+     <!-- answer表查询数据 -->
+</mapper>

@@ -1,0 +1,8 @@
+package ssm.dao;
+
+import ssm.entity.Teacher;
+
+public interface TeacherDao {
+	int FindTeacher(String teacher_id);
+	Teacher FindTeacherMSG(String teacher_id);
+}

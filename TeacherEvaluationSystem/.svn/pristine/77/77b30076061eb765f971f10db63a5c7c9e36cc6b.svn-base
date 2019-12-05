@@ -1,0 +1,34 @@
+package ssm.test;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import ssm.entity.Classroom;
+import ssm.service.AdminService;
+
+
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations= {"classpath:applicationContext.xml","classpath:spring-mvc.xml"})
+public class AdminServiceTest {
+	@Autowired
+	private AdminService adminservice;
+	
+	//测试添加班级
+	@Test
+	public void addclass() {
+		Classroom cl=new Classroom();
+		cl.setClass_id(1690010);
+		cl.setClass_name("软件工程10班");
+		int i=adminservice.addClass(cl);
+		if(i>0) {
+			System.out.println("成功");
+		}else {
+			System.out.println("失败");
+		}
+	}
+	 
+}

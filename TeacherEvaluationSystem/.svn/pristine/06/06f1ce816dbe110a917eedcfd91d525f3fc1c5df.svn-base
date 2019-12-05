@@ -1,0 +1,36 @@
+@charset "UTF-8";
+*{
+	margin: 0px;
+	padding: 0px;
+}
+body{
+	overflow: hidden;
+	font-size: 24px;
+	font-family: cursive;
+}
+.main{
+	width: 400px;
+	height: 300px;
+	margin-left: 25%;
+	margin-top: 5%;	
+}
+table{
+	table-layout: auto;
+	text-align: center;
+	width: 400px;
+	height: 300px;
+	background-color: #f7f2fd;
+}
+tr{
+	height: 30px;
+}
+td{
+	height: 30px;
+	text-align: left;
+}
+.top{
+	height: 50px;
+	text-align: center;
+	padding-top: 20px;
+	background-color: #a6d9aa;
+}

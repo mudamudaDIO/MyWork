@@ -1,0 +1,23 @@
+package ssm.dao;
+
+import java.util.List;
+
+import ssm.entity.Answer;
+import ssm.entity.Student;
+import ssm.entity.Subject;
+
+public interface StudentDao {
+	Student getStudent(Student student);//取出学生
+	
+	int changePass(Student student);//修改密码
+	
+	Student getStudentByid(int id);//根据学号查询学生
+	
+	int addAnswer(Answer answer);//添加评价
+	
+	List<Subject> getSubjects(int classid);//根据班级获取课程
+	
+	List<Answer> getAnswerByVoteId(int id);//查看学生的评价情况
+	
+	int changeStudent(Student s);//修改信息
+}
